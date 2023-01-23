@@ -26,8 +26,11 @@ client.on('ready', async () => {
   })
 })
 
+let lastMessageId
+
 client.on('messageCreate', async (message) => {
-  if (message.guildId === guildId) {
+  if (message.guildId === guildId && message.id != lastMessageId) {
+    lastMessageId = message.id
     const messageObj = {
       message: message.content,
       message_id: message.id,
