@@ -42,12 +42,13 @@ client.on('messageCreate', async (message) => {
     }
 
     const { error } = await supabase.from('all_messages').insert(messageObj)
+
     if (error) {
       console.log(error)
     }
     const date = new Date()
     console.log(
-      `${date.getHours}:${date.getMinutes} -  Message from ${messageObj.username} saved succesfully`
+      `${date.getHours()}:${date.getMinutes()} -  Message from ${messageObj.username} saved succesfully`
     )
   }
 })
