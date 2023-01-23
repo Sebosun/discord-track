@@ -45,6 +45,9 @@ client.on('messageCreate', async (message) => {
     if (error) {
       console.log(error)
     }
-    console.log(`Message from ${messageObj.username} saved succesfully`)
+    const date = new Date()
+    console.log(
+      `${date.getHours}:${date.getMinutes} -  Message from ${messageObj.username} saved succesfully`
+    )
   }
 })

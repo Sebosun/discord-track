@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Bes",
   "license": "GPL2",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.4.1",
     "discord.js-selfbot-v13": "^2.9.20",
