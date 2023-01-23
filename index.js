@@ -1,6 +1,9 @@
 const { createClient } = require('@supabase/supabase-js')
 const { Client } = require('discord.js-selfbot-v13')
+const express = require('express')
 require('dotenv').config()
+
+const app = express()
 
 const client = new Client({ checkUpdate: false })
 
@@ -48,7 +51,13 @@ client.on('messageCreate', async (message) => {
     }
     const date = new Date()
     console.log(
-      `${date.getHours()}:${date.getMinutes()} -  Message from ${messageObj.username} saved succesfully`
+      `${date.getHours()}:${date.getMinutes()} -  Message from ${
+        messageObj.username
+      } saved succesfully`
     )
   }
+})
+
+app.get('/', (req, res) => {
+  res.sendStatus(200)
 })

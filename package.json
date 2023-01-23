@@ -10,10 +10,10 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.4.1",
     "discord.js-selfbot-v13": "^2.9.20",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
   },
   "engines": {
     "node": ">=16 <17"
   }
-  
 }
