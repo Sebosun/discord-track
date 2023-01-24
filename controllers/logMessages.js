@@ -3,7 +3,7 @@ const timestamp = require('time-stamp')
 
 const guildId = process.env.GUILD_ID
 
-const handleMessageSave = async (message) => {
+const handleMessageSave = async (message, client) => {
   if (message.guildId != guildId) return
   lastMessageId = message.id
   const messageObj = {
