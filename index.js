@@ -1,20 +1,13 @@
 const { createClient } = require('@supabase/supabase-js')
 const { Client } = require('discord.js-selfbot-v13')
-const express = require('express')
+const { handleMessageSave } = require('./controllers/logMessages')
+const { logBan } = require('./controllers/logEvents')
 require('dotenv').config()
 
-const app = express()
-
 const client = new Client({ checkUpdate: false })
-
 const token = process.env.TOKEN
-const supabaseBaseLink = process.env.SUPABASE_BASE_LINK
-const supabaseHash = process.env.SUPABASE_ADMIN_HASH
-const guildId = process.env.GUILD_ID
 
 client.login(token)
-
-const supabase = createClient(supabaseBaseLink, supabaseHash)
 
 // TODO: handle edited messages
 
@@ -26,41 +19,5 @@ client.on('ready', async () => {
   })
 })
 
-let lastMessageId
-
-client.on('messageCreate', async (message) => {
-  if (message.guildId === guildId && message.id != lastMessageId) {
-    lastMessageId = message.id
-    const messageObj = {
-      message: message.content,
-      message_id: message.id,
-      channel_name: client.channels.cache.get(message.channelId).name,
-      channelId: message.channelId,
-      username: message.author.username,
-      author_id: message.author.id,
-    }
-
-    const mentionUser = message.mentions.repliedUser
-
-    if (mentionUser) {
-      messageObj.mention_username = mentionUser.username
-      messageObj.mention_id = mentionUser.id
-    }
-
-    const { error } = await supabase.from('all_messages').insert(messageObj)
-
-    if (error) {
-      console.log(error)
-    }
-    const date = new Date()
-    console.log(
-      `${date.getHours()}:${date.getMinutes()} -  Message from ${
-        messageObj.username
-      } saved succesfully`
-    )
-  }
-})
-
-app.get('/', (req, res) => {
-  res.sendStatus(200)
-})
+client.on('messageCreate', (message) => handleMessageSave(message, client))
+client.on('guildBanAdd', logBan)
