@@ -11,6 +11,7 @@ type SavedMessage = {
   author_id?: string | null
   mention_username?: string | null
   mention_id?: string | null
+  mention_reference?: string | null
   attachement_types?: string[] | null
   attachement_urls?: string[] | null
 }
@@ -73,9 +74,10 @@ const prepareMessageData = (
     messageObj.channel_name = channel.name
   }
 
-  if (mentionUser) {
+  if (mentionUser && message.reference) {
     messageObj.mention_username = mentionUser.username
     messageObj.mention_id = mentionUser.id
+    messageObj.mention_reference = message.reference?.messageId
   }
 
   return messageObj
